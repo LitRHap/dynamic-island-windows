@@ -9,7 +9,7 @@
 
 ## Unduh
 
-[![Unduh rilis terbaru](https://img.shields.io/github/v/release/USERNAME/NAMA-REPO?label=unduh&style=for-the-badge)](https://github.com/USERNAME/NAMA-REPO/releases/latest)
+[![Unduh rilis terbaru](https://img.shields.io/github/v/release/LitRHap/dynamic-island-windows?label=unduh&style=for-the-badge)](https://github.com/LitRHap/dynamic-island-windows/releases/)
 
 | Versi | Tautan | Kebutuhan |
 |---|---|---|
