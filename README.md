@@ -13,10 +13,10 @@ An iOS-style **Dynamic Island** for Windows 10 and 11. A frosted-glass pill sits
 
 | Version | Link | Needs |
 |---|---|---|
-| **Standalone** (recommended) | [DynamicIsland-win-x64-standalone.zip](https://github.com/USERNAME/REPO-NAME/releases/latest/download/DynamicIsland-win-x64-standalone.zip) | Nothing else, just unzip and run (larger file) |
-| **Lightweight** | [DynamicIsland-win-x64.zip](https://github.com/USERNAME/REPO-NAME/releases/latest/download/DynamicIsland-win-x64.zip) | [.NET 8 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/8.0) |
+| **Standalone** (recommended) | [DynamicIsland-win-x64-standalone.zip](https://github.com/LitRHap/dynamic-island-windows/releases/latest/download/DynamicIsland-win-x64-standalone.zip) | Nothing else, just unzip and run (larger file) |
+| **Lightweight** | [DynamicIsland-win-x64.zip](https://github.com/LitRHap/dynamic-island-windows/releases/latest/download/DynamicIsland-win-x64.zip) | [.NET 8 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/8.0) |
 
-All versions: [Releases page](https://github.com/USERNAME/REPO-NAME/releases).
+All versions: [Releases page](https://github.com/LitRHap/dynamic-island-windows/releases).
 
 **Install:**
 
