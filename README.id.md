@@ -131,14 +131,13 @@ Butuh [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) dan Windows
 ```powershell
 git clone https://github.com/USERNAME/REPO.git
 cd REPO
-dotnet run -c Release
+dotnet run
 ```
 
 Membuat satu file `.exe` mandiri:
 
 ```powershell
-dotnet publish DynamicIsland.csproj -c Release -r win-x64 --self-contained true `
-  -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -o publish
+dotnet publish -c Release -r win-x64 --self-contained false
 ```
 
 Hasilnya ada di `publish\DynamicIsland.exe`.
