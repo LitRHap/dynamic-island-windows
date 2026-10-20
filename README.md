@@ -9,7 +9,7 @@ An iOS-style **Dynamic Island** for Windows 10 and 11. A frosted-glass pill sits
 
 ## Download
 
-[![Download latest release](https://img.shields.io/github/v/release/LitRHap/dynamic-island-windows?label=download&style=for-the-badge)](https://github.com/LitRHap/dynamic-island_windows/releases/)
+[![Download latest release](https://img.shields.io/github/v/release/LitRHap/dynamic-island-windows?label=download&style=for-the-badge)](https://github.com/LitRHap/dynamic-island-windows/releases/)
 
 | Version | Link | Needs |
 |---|---|---|
