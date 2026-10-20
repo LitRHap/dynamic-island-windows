@@ -143,16 +143,3 @@ dotnet publish DynamicIsland.csproj -c Release -r win-x64 --self-contained true 
 
 The result is `publish\DynamicIsland.exe`.
 
-## Publishing a release
-
-Push a version tag and GitHub Actions will build the app and attach `DynamicIsland.exe` to the Releases page automatically:
-
-```powershell
-git tag v1.0.0
-git push origin v1.0.0
-```
-
-## License
-
-Add your license here (for example MIT).
-"# dynamic-island-windows" 
