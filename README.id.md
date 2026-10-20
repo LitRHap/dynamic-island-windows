@@ -13,10 +13,10 @@
 
 | Versi | Tautan | Kebutuhan |
 |---|---|---|
-| **Mandiri** (disarankan) | [DynamicIsland-win-x64-standalone.zip](https://github.com/USERNAME/NAMA-REPO/releases/latest/download/DynamicIsland-win-x64-standalone.zip) | Tidak butuh apa pun, ekstrak lalu jalankan (ukuran lebih besar) |
-| **Ringan** | [DynamicIsland-win-x64.zip](https://github.com/USERNAME/NAMA-REPO/releases/latest/download/DynamicIsland-win-x64.zip) | [.NET 8 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/8.0) |
+| **Exe** (disarankan) | [DynamicIsland.exe](https://github.com/LitRHap/dynamic-island-windows/releases/download/v1/DynamicIsland.exe) | Tidak butuh apa pun, ekstrak lalu jalankan (ukuran lebih besar) |
+| **Source Code** | [Source Code](https://github.com/LitRHap/dynamic-island-windows/archive/refs/tags/v1.zip) | [.NET 8 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/8.0) |
 
-Semua versi: [halaman Releases](https://github.com/USERNAME/NAMA-REPO/releases).
+Semua versi: [halaman Releases](https://github.com/LitRHap/dynamic-island-windows/releases).
 
 **Cara pasang:**
 
