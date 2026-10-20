@@ -131,7 +131,7 @@ Requires the [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) and 
 ```powershell
 git clone https://github.com/USERNAME/REPO.git
 cd REPO
-dotnet run -c Release
+dotnet run
 ```
 
 Create a single self-contained `.exe`:
