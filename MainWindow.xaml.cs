@@ -41,10 +41,10 @@ public partial class MainWindow : Window
     private const double PeekPx = 3;
 
 
-    private static readonly string[] PageOrder = { "calendar", "media", "stats", "control", "notif", "timer", "files" };
+    private static readonly string[] PageOrder = { "calendar", "media", "lyrics", "stats", "control", "notif", "timer", "files" };
     private static readonly Dictionary<string, double> PageH = new()
     {
-        ["calendar"] = 140, ["media"] = 92, ["stats"] = 120, ["control"] = 120, ["notif"] = 104, ["timer"] = 92, ["files"] = 92
+        ["calendar"] = 140, ["media"] = 92, ["lyrics"] = 92, ["stats"] = 120, ["control"] = 120, ["notif"] = 104, ["timer"] = 92, ["files"] = 92
     };
 
     private enum IslandState { Collapsed, Toast, Expanded }
@@ -165,7 +165,7 @@ public partial class MainWindow : Window
 
         _pages = new (string Name, FrameworkElement Page, Button Tab)[]
         {
-            ("calendar", PageCalendar, TabCal), ("media", PageMedia, TabMedia), ("stats", PageStats, TabStats), ("control", PageControl, TabCtrl),
+            ("calendar", PageCalendar, TabCal), ("media", PageMedia, TabMedia), ("lyrics", PageLyrics, TabLyrics), ("stats", PageStats, TabStats), ("control", PageControl, TabCtrl),
             ("notif", PageNotif, TabNotif), ("timer", PageTimer, TabTimer), ("files", PageFiles, TabFiles)
         };
         NotifList.ItemsSource = _notifs;
@@ -476,6 +476,7 @@ public partial class MainWindow : Window
 
     private void OnTick(object? sender, EventArgs e)
     {
+        UpdateLyricLine();
         UpdateTimer();
         UpdateCollapsedText();
         CheckNewDay();
@@ -488,6 +489,7 @@ public partial class MainWindow : Window
         DlBadge.Opacity = _dlActive && !_tRunning ? 1 : 0;
         if (_tRunning) CollapsedText.Text = MmSs(_tRemaining);
         else if (_dlActive) CollapsedText.Text = Rate(_dlSpeed);
+        else if (_playing && _lyrNow.Length > 0) CollapsedText.Text = _lyrNow;
         else if (_playing && _title.Length > 0) CollapsedText.Text = _title;
         else CollapsedText.Text = DateTime.Now.ToString("HH:mm");
     }
@@ -574,6 +576,7 @@ public partial class MainWindow : Window
             CoverBrush.ImageSource = bmp;
             UpdateCollapsedText();
 
+            LoadLyrics(props.Artist ?? "", _title, props.AlbumTitle ?? "");
             string key = _title + "|" + props.Artist;
             if (key != _lastTrack && _title.Length > 0)
             {
