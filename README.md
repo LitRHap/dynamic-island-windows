@@ -5,9 +5,9 @@
 **An iOS-style Dynamic Island for your Windows desktop.**
 Frosted-glass look, smooth spring animations, and a calendar, media player, system stats, quick controls and more, all in one pill at the top of your screen.
 
-[**⬇️ Download for Windows**](https://github.com/USERNAME/REPO/releases/latest/download/DynamicIsland.exe)
+[**⬇️ Download for Windows**]([https://github.com/USERNAME/REPO](https://github.com/LitRHap/dynamic-island-windows)/releases/latest/download/DynamicIsland.exe)
 &nbsp;·&nbsp;
-[All releases](https://github.com/USERNAME/REPO/releases)
+[All releases]([https://github.com/USERNAME/REPO](https://github.com/LitRHap/dynamic-island-windows)/releases)
 &nbsp;·&nbsp;
 [Bahasa Indonesia](README.id.md)
 
