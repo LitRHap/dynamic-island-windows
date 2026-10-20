@@ -1,0 +1,24 @@
+<!-- ============ 1) Tempel di MainWindow.xaml, di dalam ExpandedView, tepat SEBELUM "<!-- Tab + baterai -->" ============ -->
+<Grid x:Name="PageLyrics" Height="92" VerticalAlignment="Top" Visibility="Collapsed" Opacity="0">
+    <Grid.RenderTransform><TranslateTransform/></Grid.RenderTransform>
+    <StackPanel VerticalAlignment="Center">
+        <TextBlock x:Name="LyricPrev" Foreground="#80FFFFFF" FontSize="12" TextAlignment="Center"
+                   TextTrimming="CharacterEllipsis" Text=""/>
+        <TextBlock x:Name="LyricNow" Foreground="White" FontSize="17" FontWeight="SemiBold" TextAlignment="Center"
+                   TextTrimming="CharacterEllipsis" Margin="0,6" Text="">
+            <TextBlock.RenderTransform><TranslateTransform/></TextBlock.RenderTransform>
+        </TextBlock>
+        <TextBlock x:Name="LyricNext" Foreground="#80FFFFFF" FontSize="12" TextAlignment="Center"
+                   TextTrimming="CharacterEllipsis" Text=""/>
+    </StackPanel>
+</Grid>
+
+<!-- ============ 2) Tambah satu tombol tab di baris tab (setelah tab Media) ============ -->
+<!-- Versi IconView (percakapan ini): -->
+<Button x:Name="TabLyrics" Style="{StaticResource TabBtn}" Tag="lyrics" Click="Tab_Click">
+    <local:IconView Kind="mic" IconSize="16"/>
+</Button>
+<!-- Tambahkan juga ikon "mic" di IconView.cs, di dalam Build():
+     ["mic"] = (G(P("M12,1 A3,3 0 0 0 9,4 V12 A3,3 0 0 0 15,12 V4 A3,3 0 0 0 12,1 Z"),
+                  P("M19,10 V12 A7,7 0 0 1 5,12 V10 M12,19 V23 M8,23 H16")), false),
+     Jika memakai ikon/Glyph lain, pakai ikon mikrofon yang ada. -->
