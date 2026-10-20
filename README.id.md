@@ -142,16 +142,3 @@ dotnet publish DynamicIsland.csproj -c Release -r win-x64 --self-contained true 
 ```
 
 Hasilnya ada di `publish\DynamicIsland.exe`.
-
-## Merilis versi baru
-
-Push tag versi, lalu GitHub Actions otomatis build dan memasang `DynamicIsland.exe` ke halaman Releases:
-
-```powershell
-git tag v1.0.0
-git push origin v1.0.0
-```
-
-## Lisensi
-
-Tentukan lisensi Anda di sini (mis. MIT).
