@@ -1,11 +1,14 @@
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace DynamicIsland;
 
-// Penghubung lirik <-> pemutar musik. Memakai nama anggota dari MainWindow versi percakapan ini:
-//   _session, _playing, _title, _tlTotal, LyricPrev/LyricNow/LyricNext (lihat PageLyrics.xaml.txt)
+// Lirik di dalam pemutar musik (panel di sisi kanan halaman Media).
+// Mandiri: lagu baru dideteksi sendiri lewat timer, jadi tidak perlu mengubah MainWindow.xaml.cs.
+// Memakai anggota dari MainWindow.xaml.cs: _session, _playing, _title, _state, _page, IslandState.
 public partial class MainWindow
 {
     private readonly LyricsService _lyricsSvc = new();
@@ -13,21 +16,73 @@ public partial class MainWindow
     private CancellationTokenSource? _lyrCts;
     private string _lyrKey = "";
     private int _lyrIdx = -2;
-    private string _lyrNow = "";             // baris saat ini (dipakai juga oleh teks di pill kecil)
+    private string _lyrNow = "";             // baris saat ini (kosong jika lirik mati)
+    private readonly DispatcherTimer _lyrTimer = new() { Interval = TimeSpan.FromMilliseconds(300) };
 
     // + = lirik muncul lebih cepat, - = lebih lambat (milidetik). Sesuaikan jika terasa tidak pas.
     private const int LyricOffsetMs = 0;
 
-    // Panggil saat lagu berganti (di RefreshMediaAsync, setelah _title terisi)
+    // Dipanggil dari XAML (Window Loaded="OnLoadedExtra")
+    private void OnLoadedExtra(object sender, RoutedEventArgs e)
+    {
+        LyricsItem.IsChecked = IslandPrefs.LyricsEnabled;
+        SyncBreakMenu();
+        _lyrTimer.Tick += (_, _) => LyricsTick();
+        _lyrTimer.Start();
+        InitBreakReminder();
+    }
+
+    // ---------------------------------------------------------------- menu on/off
+    private void LyricsToggle_Click(object sender, RoutedEventArgs e)
+    {
+        IslandPrefs.LyricsEnabled = LyricsItem.IsChecked;
+        if (!IslandPrefs.LyricsEnabled) ClearLyrics();
+        else { _lyrKey = ""; LyricsTick(); }          // nyalakan: muat ulang lirik lagu yang sedang diputar
+    }
+
+    // ---------------------------------------------------------------- deteksi lagu
+    private void LyricsTick()
+    {
+        if (!IslandPrefs.LyricsEnabled) return;
+
+        string title = _title ?? "";
+        string artist = ArtistText.Text ?? "";
+        string key = artist + "|" + title;
+
+        if (title.Length == 0) { if (_lyrKey.Length > 0) ClearLyrics(); return; }
+        if (key != _lyrKey) LoadLyrics(artist, title, "");
+        UpdateLyricLine();
+    }
+
+    private void ClearLyrics()
+    {
+        _lyrCts?.Cancel();
+        _lyr = null;
+        _lyrKey = "";
+        _lyrIdx = -2;
+        _lyrNow = "";
+        LyricNow.Text = "";
+        LyricNext.Text = "";
+        SetLyricsVisible(false);
+    }
+
+    private void SetLyricsVisible(bool on)
+        => LyricPanel.Visibility = on && IslandPrefs.LyricsEnabled ? Visibility.Visible : Visibility.Collapsed;
+
+    // Boleh juga dipanggil dari RefreshMediaAsync (aman: lagu yang sama diabaikan)
     private async void LoadLyrics(string artist, string title, string album)
     {
+        if (!IslandPrefs.LyricsEnabled) return;
         string key = artist + "|" + title;
         if (key == _lyrKey) return;
+
         _lyrKey = key;
         _lyr = null;
         _lyrIdx = -2;
         _lyrNow = "";
-        SetLyricTexts("", "Mencari lirik…", "");
+        LyricNow.Text = "";
+        LyricNext.Text = "";
+        SetLyricsVisible(false);
 
         _lyrCts?.Cancel();
         _lyrCts = new CancellationTokenSource();
@@ -35,13 +90,21 @@ public partial class MainWindow
         try
         {
             await Task.Delay(600, ct);               // beri waktu pemutar memperbarui durasi lagu baru
-            var res = await _lyricsSvc.GetAsync(artist, title, album, CurrentDuration(), ct);
+            string alb = album;
+            if (string.IsNullOrEmpty(alb) && _session != null)
+            {
+                try { var p = await _session.TryGetMediaPropertiesAsync(); alb = p.AlbumTitle ?? ""; } catch { }
+            }
+            var res = await _lyricsSvc.GetAsync(artist, title, alb, CurrentDuration(), ct);
             if (ct.IsCancellationRequested) return;
+
             _lyr = res;
-            if (res == null) SetLyricTexts("", "Lirik tidak ditemukan", "");
+            _lyrIdx = -2;
+            SetLyricsVisible(res != null);           // tidak ada lirik -> panel disembunyikan
+            UpdateLyricLine();
         }
         catch (OperationCanceledException) { }
-        catch { if (!ct.IsCancellationRequested) SetLyricTexts("", "Lirik tidak ditemukan", ""); }
+        catch { }
     }
 
     private TimeSpan CurrentDuration()
@@ -69,11 +132,11 @@ public partial class MainWindow
         catch { return null; }
     }
 
-    // Panggil dari OnTick (tiap 250 ms)
+    // ---------------------------------------------------------------- baris lirik
     private void UpdateLyricLine()
     {
-        if (_lyr == null) return;
-        bool visible = _state == IslandState.Expanded && _page == "lyrics";
+        if (_lyr == null || !IslandPrefs.LyricsEnabled) return;
+        bool visible = _state == IslandState.Expanded && _page == "media";
         if (!_playing && !visible) return;           // tidak ada yang perlu diperbarui
 
         var pos = PlaybackPosition();
@@ -84,16 +147,14 @@ public partial class MainWindow
         if (i == _lyrIdx) return;
         _lyrIdx = i;
 
-        string prev = i > 0 ? lines[i - 1].Text : "";
         string now = i >= 0 ? lines[i].Text : "";
         string next = i + 1 < lines.Count ? lines[i + 1].Text : "";
         _lyrNow = now;
-        SetLyricTexts(prev, string.IsNullOrWhiteSpace(now) ? "♪" : now, next);
+        SetLyricTexts(string.IsNullOrWhiteSpace(now) ? "♪" : now, next);
     }
 
-    private void SetLyricTexts(string prev, string now, string next)
+    private void SetLyricTexts(string now, string next)
     {
-        LyricPrev.Text = prev;
         LyricNext.Text = next;
         if (LyricNow.Text == now) return;
 
