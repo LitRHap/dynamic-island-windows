@@ -9,12 +9,12 @@ An iOS-style **Dynamic Island** for Windows 10 and 11. A frosted-glass pill sits
 
 ## Download
 
-[![Download latest release](https://img.shields.io/github/v/release/LitRHap/dynamic-island-windows?label=download&style=for-the-badge)](https://github.com/LitRHap/dynamic-island-windows/releases/)
+[![Download latest release](https://img.shields.io/github/v/release/LitRHap/dynamic-island-windows?label=download&style=for-the-badge)](https://github.com/LitRHap/dynamic-island-windows/releases/latest)
 
 | Version | Link | Needs |
 |---|---|---|
-| **Exe** (recommended) | [DynamicIsland.exe](https://github.com/LitRHap/dynamic-island-windows/releases/download/v1/DynamicIsland.exe) | Nothing else, just unzip and run (larger file) |
-| **Source Code** | [Source Code](https://github.com/LitRHap/dynamic-island-windows/archive/refs/tags/v1.zip) | [.NET 8 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/8.0) |
+| **Standalone** (recommended) | [DynamicIsland-win-x64-standalone.zip](https://github.com/LitRHap/dynamic-island-windows/releases/latest/download/DynamicIsland-win-x64-standalone.zip) | Nothing else, just unzip and run (larger file) |
+| **Lightweight** | [DynamicIsland-win-x64.zip](https://github.com/LitRHap/dynamic-island-windows/releases/latest/download/DynamicIsland-win-x64.zip) | [.NET 8 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/8.0) |
 
 All versions: [Releases page](https://github.com/LitRHap/dynamic-island-windows/releases).
 
@@ -38,7 +38,7 @@ All versions: [Releases page](https://github.com/LitRHap/dynamic-island-windows/
 | Page | What it does |
 |---|---|
 | **Calendar & events** (default) | Date, a 7-day strip and your upcoming events |
-| **Media** | Now playing from Spotify, browsers and other players: cover, title, artist, play/pause/skip, seekable progress bar |
+| **Media** | Now playing from Spotify, browsers and other players: cover, title, artist, play/pause/skip, seekable progress bar, and **synced lyrics** (can be switched off) |
 | **Performance** | CPU, RAM, GPU and network speed, updated every second |
 | **Control Center** | Volume and brightness sliders, Wi-Fi, Bluetooth, mute, screenshot, lock, Settings |
 | **Notifications** | Windows notifications (see limitations) or a shortcut to the Notification Center |
@@ -50,6 +50,7 @@ All versions: [Releases page](https://github.com/LitRHap/dynamic-island-windows/
 - Volume change, power plugged/unplugged and low-battery toasts
 - **Caps Lock reminder** (works in every app) with a small badge on the pill while it is on
 - Timer remaining time on the collapsed pill
+- **Break reminder** – after 60 minutes of continuous computer use the island reminds you to rest your eyes. The interval (30 / 45 / 60 / 90 min, or off) is set from the right-click menu. Being away from the keyboard and mouse for 3 minutes counts as a break and restarts the count.
 - The island **slides away** when a window (e.g. your browser's tab bar) covers its area; move the cursor to the top edge to bring it back
 
 ![Calendar](docs/screenshots/02-calendar.png)
@@ -57,6 +58,7 @@ All versions: [Releases page](https://github.com/LitRHap/dynamic-island-windows/
 ![Performance](docs/screenshots/04-stats.png)
 ![Control Center](docs/screenshots/05-control-center.png)
 ![Caps Lock toast](docs/screenshots/06-capslock-toast.png)
+![Break reminder](docs/screenshots/08-break-toast.png)
 
 ## Requirements
 
@@ -78,8 +80,8 @@ All versions: [Releases page](https://github.com/LitRHap/dynamic-island-windows/
 ## Build from source
 
 ```bash
-git clone https://github.com/USERNAME/REPO-NAME.git
-cd REPO-NAME
+git clone https://github.com/LitRHap/dynamic-island-windows.git
+cd dynamic-island-windows
 dotnet run
 ```
 
@@ -100,7 +102,13 @@ The executable ends up in `bin/Release/net8.0-windows10.0.19041.0/win-x64/publis
 | Click the icons at the bottom | Jump to a page |
 | Drag files onto the island | Opens the file shelf |
 | Move cursor to the very top edge | Reveals the island when auto-hidden |
-| Right-click the island | Start with Windows, Exit |
+| Right-click the island | Start with Windows, **show/hide lyrics**, **break reminder interval**, Exit |
+
+## Lyrics
+
+Synced lyrics are shown on the right side of the Media page and follow the song position. They are fetched at runtime from [LRCLIB](https://lrclib.net), a free community lyrics database, and cached in `%AppData%\DynamicIsland\lyrics`. Not every song has lyrics; when none are found the panel stays hidden. Turn the feature on or off from the right-click menu (**Tampilkan lirik di pemutar musik**). Your choice is remembered in `%AppData%\DynamicIsland\prefs.json`.
+
+If the lyrics feel slightly early or late, change `LyricOffsetMs` in `MainWindow.Lyrics.cs`.
 
 ## Customize
 
@@ -131,6 +139,11 @@ Constants near the top of `MainWindow.xaml.cs`:
 - The **brightness** slider only appears on laptops / internal displays.
 - **GPU** usage uses Windows performance counters and may show `N/A` on some systems.
 - Primary monitor only.
+
+## Credits
+
+- Lyrics provided by [LRCLIB](https://lrclib.net)
+- Audio via [NAudio](https://github.com/naudio/NAudio)
 
 ## License
 
