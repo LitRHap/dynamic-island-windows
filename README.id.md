@@ -26,7 +26,6 @@
 
 > **Muncul "Windows protected your PC" (SmartScreen)?** Aplikasi ini belum ditandatangani (code signing). Klik **More info → Run anyway**. Kode sumbernya terbuka di [GitHub](https://github.com/LitRHap/dynamic-island-windows).
 
-Versi lama ada di [halaman Releases](https://github.com/LitRHap/dynamic-island-windows/releases). Perubahan tiap versi ada di [Changelog](CHANGELOG.md).
 
 ## Fitur
 
