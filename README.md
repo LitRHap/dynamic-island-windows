@@ -26,7 +26,6 @@ An iOS-style **Dynamic Island** for Windows 10 and 11. A frosted-glass pill sits
 
 > **"Windows protected your PC" (SmartScreen)?** The app is not code-signed. Click **More info → Run anyway**. The full source code is on [GitHub](https://github.com/LitRHap/dynamic-island-windows).
 
-Older versions are on the [Releases page](https://github.com/LitRHap/dynamic-island-windows/releases). See what changed in the [Changelog](CHANGELOG.md).
 
 ## Features
 
