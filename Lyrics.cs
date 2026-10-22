@@ -26,7 +26,7 @@ internal sealed class LyricsService
     {
         var h = new HttpClient { Timeout = TimeSpan.FromSeconds(10) };
         // LRCLIB meminta aplikasi memperkenalkan diri lewat User-Agent
-        h.DefaultRequestHeaders.UserAgent.ParseAdd("DynamicIslandWindows/1.0 (https://github.com/USERNAME/REPO-NAME)");
+        h.DefaultRequestHeaders.UserAgent.ParseAdd("DynamicIslandWindows/1.0 (https://github.com/LitRHap/dynamic-island-windows)");
         return h;
     }
 
