@@ -9,12 +9,12 @@
 
 ## Unduh
 
-[![Unduh rilis terbaru](https://img.shields.io/github/v/release/LitRHap/dynamic-island-windows?label=unduh&style=for-the-badge)](https://github.com/LitRHap/dynamic-island-windows/releases/)
+[![Unduh rilis terbaru](https://img.shields.io/github/v/release/LitRHap/dynamic-island-windows?label=unduh&style=for-the-badge)](https://github.com/LitRHap/dynamic-island-windows/releases/latest)
 
 | Versi | Tautan | Kebutuhan |
 |---|---|---|
-| **Exe** (disarankan) | [DynamicIsland.exe](https://github.com/LitRHap/dynamic-island-windows/releases/download/v1/DynamicIsland.exe) | Tidak butuh apa pun, ekstrak lalu jalankan (ukuran lebih besar) |
-| **Source Code** | [Source Code](https://github.com/LitRHap/dynamic-island-windows/archive/refs/tags/v1.zip) | [.NET 8 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/8.0) |
+| **Mandiri** (disarankan) | [DynamicIsland-win-x64-standalone.zip](https://github.com/LitRHap/dynamic-island-windows/releases/latest/download/DynamicIsland-win-x64-standalone.zip) | Tidak butuh apa pun, ekstrak lalu jalankan (ukuran lebih besar) |
+| **Ringan** | [DynamicIsland-win-x64.zip](https://github.com/LitRHap/dynamic-island-windows/releases/latest/download/DynamicIsland-win-x64.zip) | [.NET 8 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/8.0) |
 
 Semua versi: [halaman Releases](https://github.com/LitRHap/dynamic-island-windows/releases).
 
@@ -38,7 +38,7 @@ Semua versi: [halaman Releases](https://github.com/LitRHap/dynamic-island-window
 | Halaman | Fungsi |
 |---|---|
 | **Kalender & acara** (default) | Tanggal, deretan 7 hari, dan acara mendatang |
-| **Media** | Sedang diputar dari Spotify, browser, dan pemutar lain: sampul, judul, artis, putar/jeda/lewati, progress bar yang bisa diklik |
+| **Media** | Sedang diputar dari Spotify, browser, dan pemutar lain: sampul, judul, artis, putar/jeda/lewati, progress bar yang bisa diklik, dan **lirik tersinkron** (bisa dimatikan) |
 | **Performa** | CPU, RAM, GPU, dan kecepatan jaringan, diperbarui tiap detik |
 | **Pusat Kontrol** | Slider volume dan kecerahan, Wi-Fi, Bluetooth, senyap, screenshot, kunci layar, Pengaturan |
 | **Notifikasi** | Notifikasi Windows (lihat batasan) atau pintasan ke Pusat Notifikasi |
@@ -50,6 +50,7 @@ Semua versi: [halaman Releases](https://github.com/LitRHap/dynamic-island-window
 - Toast saat volume berubah, charger dicolok/dicabut, dan baterai lemah
 - **Pengingat Caps Lock** (berlaku di semua aplikasi) dengan lencana kecil di pill selama aktif
 - Sisa waktu timer tampil di pill kecil
+- **Pengingat istirahat** – setelah 60 menit terus-menerus memakai komputer, island mengingatkan Anda untuk mengistirahatkan mata. Jedanya (30 / 45 / 60 / 90 menit, atau mati) diatur dari menu klik kanan. Menjauh dari keyboard dan mouse selama 3 menit dianggap sudah istirahat, dan hitungan dimulai ulang.
 - Island **menyelinap ke atas** saat sebuah jendela (misalnya bar tab browser) menutupi areanya; gerakkan kursor ke tepi paling atas untuk memunculkannya lagi
 
 ![Kalender](docs/screenshots/02-calendar.png)
@@ -57,6 +58,7 @@ Semua versi: [halaman Releases](https://github.com/LitRHap/dynamic-island-window
 ![Performa](docs/screenshots/04-stats.png)
 ![Pusat Kontrol](docs/screenshots/05-control-center.png)
 ![Toast Caps Lock](docs/screenshots/06-capslock-toast.png)
+![Pengingat istirahat](docs/screenshots/08-break-toast.png)
 
 ## Persyaratan
 
@@ -78,8 +80,8 @@ Semua versi: [halaman Releases](https://github.com/LitRHap/dynamic-island-window
 ## Build dari kode sumber
 
 ```bash
-git clone https://github.com/USERNAME/NAMA-REPO.git
-cd NAMA-REPO
+git clone https://github.com/LitRHap/dynamic-island-windows.git
+cd dynamic-island-windows
 dotnet run
 ```
 
@@ -100,7 +102,13 @@ File `.exe` ada di `bin/Release/net8.0-windows10.0.19041.0/win-x64/publish/`.
 | Klik ikon di bagian bawah | Langsung ke halaman itu |
 | Seret file ke island | Membuka rak berkas |
 | Gerakkan kursor ke tepi paling atas | Memunculkan island yang sedang bersembunyi |
-| Klik kanan island | Mulai otomatis dengan Windows, Keluar |
+| Klik kanan island | Mulai otomatis dengan Windows, **tampilkan/sembunyikan lirik**, **jeda pengingat istirahat**, Keluar |
+
+## Lirik
+
+Lirik tersinkron tampil di sisi kanan halaman Media dan mengikuti posisi lagu. Lirik diambil saat program berjalan dari [LRCLIB](https://lrclib.net), database lirik gratis berbasis komunitas, lalu disimpan di cache `%AppData%\DynamicIsland\lyrics`. Tidak semua lagu punya lirik; kalau tidak ditemukan, panelnya disembunyikan. Fitur ini bisa dinyalakan atau dimatikan dari menu klik kanan (**Tampilkan lirik di pemutar musik**). Pilihan Anda diingat di `%AppData%\DynamicIsland\prefs.json`.
+
+Kalau lirik terasa sedikit terlalu cepat atau lambat, ubah `LyricOffsetMs` di `MainWindow.Lyrics.cs`.
 
 ## Kustomisasi
 
@@ -131,6 +139,11 @@ Konstanta di bagian atas `MainWindow.xaml.cs`:
 - Slider **kecerahan** hanya muncul di laptop / layar internal.
 - **GPU** memakai performance counter Windows dan bisa tampil `N/A` di sebagian sistem.
 - Hanya monitor utama.
+
+## Kredit
+
+- Lirik disediakan oleh [LRCLIB](https://lrclib.net)
+- Audio lewat [NAudio](https://github.com/naudio/NAudio)
 
 ## Lisensi
 
