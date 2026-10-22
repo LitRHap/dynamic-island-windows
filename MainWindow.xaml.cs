@@ -41,10 +41,10 @@ public partial class MainWindow : Window
     private const double PeekPx = 3;
 
 
-    private static readonly string[] PageOrder = { "calendar", "media", "lyrics", "stats", "control", "notif", "timer", "files" };
+    private static readonly string[] PageOrder = { "calendar", "media", "stats", "control", "notif", "timer", "files" };
     private static readonly Dictionary<string, double> PageH = new()
     {
-        ["calendar"] = 140, ["media"] = 92, ["lyrics"] = 92, ["stats"] = 120, ["control"] = 120, ["notif"] = 104, ["timer"] = 92, ["files"] = 92
+        ["calendar"] = 140, ["media"] = 92, ["stats"] = 120, ["control"] = 120, ["notif"] = 104, ["timer"] = 92, ["files"] = 92
     };
 
     private enum IslandState { Collapsed, Toast, Expanded }
@@ -165,7 +165,7 @@ public partial class MainWindow : Window
 
         _pages = new (string Name, FrameworkElement Page, Button Tab)[]
         {
-            ("calendar", PageCalendar, TabCal), ("media", PageMedia, TabMedia), ("lyrics", PageLyrics, TabLyrics), ("stats", PageStats, TabStats), ("control", PageControl, TabCtrl),
+            ("calendar", PageCalendar, TabCal), ("media", PageMedia, TabMedia), ("stats", PageStats, TabStats), ("control", PageControl, TabCtrl),
             ("notif", PageNotif, TabNotif), ("timer", PageTimer, TabTimer), ("files", PageFiles, TabFiles)
         };
         NotifList.ItemsSource = _notifs;
